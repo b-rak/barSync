@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
+import { IngredientItem } from "../../../interfaces/Ingredient";
+import { InventoryItem } from "../../../interfaces/Inventory";
 
-function Ingredient({ ingredient, inventory, setInventory, getInventory }) {
+interface IngredientProps {
+  ingredient: IngredientItem;
+  inventory: InventoryItem[];
+  getInventory: () => Promise<void>;
+}
+
+function Ingredient({ ingredient, inventory, getInventory }: IngredientProps )  {
   const [added, setAdded] = useState(false);
 
   const plainTextInventory = inventory.map((el) => el.strIngredient1);

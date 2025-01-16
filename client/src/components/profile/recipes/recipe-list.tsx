@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../nav-bar/nav-bar";
 import { Link } from "react-router";
+import Navbar from "../../nav-bar/nav-bar";
+import { InventoryItem } from "../../../interfaces/Inventory";
 
 function RecipeList() {
-  const [inventory, setInventory] = useState([]);
-  const [recipeFilters, setRecipeFilters] = useState([]);
-  const [recipeList, setRecipeList] = useState([]);
+  const [inventory, setInventory] = useState<InventoryItem[]>([]); 
+  const [recipeFilters, setRecipeFilters] = useState<string[]>([]);
+  const [recipeList, setRecipeList] = useState<any[]>([]);//TODO change any
 
   useEffect(() => {
     if (!inventory.length) {
@@ -48,15 +49,15 @@ function RecipeList() {
     }
   }
 
-  function addIngredient(event) {
-    const ingredient = event.target.value;
+  function addIngredient(event: React.MouseEvent<HTMLButtonElement>) {
+    const ingredient = event.currentTarget.value;
     const updatedFilter = recipeFilters.slice();
     updatedFilter.push(ingredient.split(" ").join("_"));
     setRecipeFilters(updatedFilter);
   }
 
-  function removeIngredient(event) {
-    const ingredient = event.target.value;
+  function removeIngredient(event: React.MouseEvent<HTMLInputElement>) {
+    const ingredient = event.currentTarget.value;
     const idxOfIngredient = recipeFilters.indexOf(ingredient);
     const updatedFilter = recipeFilters.slice();
     updatedFilter.splice(idxOfIngredient, 1);

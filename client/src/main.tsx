@@ -1,13 +1,14 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router";
-import "./index.css";
-import App from "./App.js";
-import IngredientSearch from "./components/profile/inventory/ingredientSearch.jsx";
-import RecipeList from "./components/profile/recipes/recipe-list.js";
-import RecipeDetail from "./components/profile/recipes/recipe-detail.jsx";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-createRoot(document.getElementById("root")).render(
+import App from "./App";
+import IngredientSearch from "./components/profile/inventory/ingredientSearch";
+import RecipeDetail from "./components/profile/recipes/recipe-detail";
+import RecipeList from "./components/profile/recipes/recipe-list";
+import "./index.css";
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
