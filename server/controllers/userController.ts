@@ -1,35 +1,41 @@
-const bcrypt = require("bcrypt");
-const db = require("../models/index.js");
+import bcrypt from "bcrypt";
+import { db } from "../models/index";
+import { Request, Response } from "express";
 
-exports.createUser = async (req, res) => {
+const rounds = process.env.SALTROUNDS || 10;
+
+const createUser = async (req: Request, res: Response) => {
   try {
     const { email, firstname, lastname, password } = req.body;
     const user = await db.user.findOne({ where: { email: email } });
     if (user) {
-      res.status(409).send({ error: "409", message: "invalid credentials" });
+      res.status(409).send({ error: "409", message: "User already exists!" });
     }
     if (password === "") throw new Error();
-    const hash = await bcrypt.hash(password, process.env.SALTROUNDS);
-    user = await db.user.create({
+    const hash = await bcrypt.hash(password, rounds);
+    const newUser = await db.user.create({
       email: email,
       firstname: firstname,
       lastname: lastname,
       password: hash,
     });
-    req.session.uid = user.id;
+    req.session.id = newUser.id.toString();
     res.status(201).send(user);
   } catch (error) {
     res.status(400).send({ error, message: "Could not create user" });
   }
 };
 
-exports.login = async (req, res) => {
+const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const user = await db.user.findOne({ where: { email: email } });
+    if (!user) {
+      return res.status(401).send({ error: 'Wrong credentials' });
+    }
     const validPass = await bcrypt.compare(password, user.password);
     if (!validPass) throw new Error();
-    req.session.uid = user.id;
+    req.session.id = user.id.toString();
     res.status(200).send(user);
   } catch (error) {
     res
@@ -38,7 +44,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.logout = async (req, res) => {
+const logout = async (req: Request, res: Response) => {
   req.session.destroy((error) => {
     if (error) {
       res
@@ -50,3 +56,5 @@ exports.logout = async (req, res) => {
     }
   });
 };
+
+export default { createUser, login, logout };

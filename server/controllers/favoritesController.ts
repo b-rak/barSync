@@ -1,7 +1,8 @@
 "use strict";
-const db = require("../models/index.js");
+import { Request, Response } from "express";
+import { db } from "../models/index";
 
-exports.getFavorites = async (req, res) => {
+const getFavorites = async (req: Request, res: Response) => {
   try {
     const favorites = await db.favoritesModel.findAll();
     res.status(201);
@@ -12,7 +13,7 @@ exports.getFavorites = async (req, res) => {
   }
 };
 
-exports.addFavorite = async (req, res) => {
+const addFavorite = async (req: Request, res: Response) => {
   try {
     const favoriteId = req.body.idDrink;
     const favoriteThumb = req.body.strDrinkThumb;
@@ -30,7 +31,7 @@ exports.addFavorite = async (req, res) => {
   }
 };
 
-exports.removeFavorite = async (req, res) => {
+const removeFavorite = async (req: Request, res: Response) => {
   try {
     const favorite = req.body.idDrink;
     await db.favoritesModel.destroy({
@@ -45,3 +46,5 @@ exports.removeFavorite = async (req, res) => {
     res.status(500);
   }
 };
+
+export default { getFavorites, addFavorite, removeFavorite };

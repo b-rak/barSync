@@ -1,7 +1,8 @@
 "use strict";
-const db = require("../models/index.js");
+import { Request, Response } from "express";
+import { db } from "../models/index";
 
-exports.getInventory = async (req, res) => {
+const getInventory = async (req: Request, res: Response) => {
   try {
     const inventory = await db.inventory.findAll();
     res.status(201);
@@ -12,7 +13,7 @@ exports.getInventory = async (req, res) => {
   }
 };
 
-exports.addIngredient = async (req, res) => {
+const addIngredient = async (req: Request, res: Response) => {
   try {
     const ingredient = req.body.strIngredient1;
     await db.inventory.create({ strIngredient1: ingredient });
@@ -24,7 +25,7 @@ exports.addIngredient = async (req, res) => {
   }
 };
 
-exports.removeIngredient = async (req, res) => {
+const removeIngredient = async (req: Request, res: Response) => {
   try {
     const ingredient = req.body.strIngredient1;
     await db.inventory.destroy({
@@ -39,3 +40,5 @@ exports.removeIngredient = async (req, res) => {
     res.status(500);
   }
 };
+
+export default { getInventory, addIngredient, removeIngredient };

@@ -1,7 +1,9 @@
 "use strict";
+import { DataTypes, Sequelize } from 'sequelize';
+import { FavoritesModel } from './modeltypes';
 
-module.exports = (sequelize, DataTypes) => {
-  const favorites = sequelize.define("favorite", {
+export default (sequelize: Sequelize) => {
+  const favorites = sequelize.define<FavoritesModel>("favorite", {
     idDrink: {
       type: DataTypes.INTEGER,
       allowNull: false,
