@@ -1,7 +1,11 @@
-const router = require("express").Router();
-const inventoryController = require("./controllers/inventoryController.js");
-const apiController = require("./controllers/apiController.js");
-const favoriteController = require("./controllers/favoritesController.js");
+"use strict";
+
+import { Router } from "express";
+import inventoryController from "./controllers/inventoryController";
+import apiController from "./controllers/apiController";
+import favoriteController from "./controllers/favoritesController";
+
+const router = Router();
 
 router.get("/inventory", inventoryController.getInventory);
 router.post("/inventory", inventoryController.addIngredient);
@@ -15,4 +19,4 @@ router.get("/ingredient_list", apiController.getIngredientList);
 router.get("/recipedetail/:drinkId", apiController.getRecipeDetails);
 router.get("/filtered_recipes/:filter", apiController.getFilteredRecipes);
 
-module.exports = router;
+export { router };
