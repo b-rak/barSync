@@ -4,7 +4,13 @@ const url = process.env.API_URL;
 const api_key = process.env.API_KEY;
 
 exports.getIngredientList = async (req, res) => {
-  const ingredientListUrl = url + api_key + "/list.php?i=list";
+  const ingredientListUrl_ = url + api_key + "/list.php?i=list";
+  
+  console.log("-------------------");
+  console.log(ingredientListUrl_);
+  const ingredientListUrl = "https://www.thecocktaildb.com/api/json/v2/9973533/list.php?i=list";
+  console.log(ingredientListUrl);
+
   try {
     const response = await fetch(ingredientListUrl);
     const fetchResponse = await response.json();
