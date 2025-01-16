@@ -1,7 +1,9 @@
 "use strict";
+import { DataTypes, Sequelize } from 'sequelize';
+import { UserModel } from './modeltypes';
 
-module.exports = (sequelize, DataTypes) => {
-  const user = sequelize.define("user", {
+export default (sequelize: Sequelize) => {
+  const user = sequelize.define<UserModel>("user", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
