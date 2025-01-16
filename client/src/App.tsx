@@ -4,9 +4,7 @@ import Navbar from "./components/nav-bar/nav-bar";
 import Profile from "./components/profile/profile";
 import { FavoriteItem } from "./interfaces/Favorite";
 import { InventoryItem } from "./interfaces/Inventory";
-import "./interfaces/InventoryItem";
  
-
 function App() {
 
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
