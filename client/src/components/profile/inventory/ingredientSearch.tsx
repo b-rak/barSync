@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { IngredientItem } from "../../../interfaces/Ingredient";
+import { InventoryItem } from "../../../interfaces/Inventory";
 import Navbar from "../../nav-bar/nav-bar";
 import Ingredient from "./ingredient";
 
+
 function IngredientSearch() {
-  const [fullIngredientList, setFullIngredientList] = useState([]);
-  const [searchText, setSearchText] = useState("");
-  const [inventory, setInventory] = useState([]);
-  const [filteredIngredientList, setFilteredIngredientList] = useState([]);
+  const [fullIngredientList, setFullIngredientList] = useState<IngredientItem[]>([]);
+  const [searchText, setSearchText] = useState<string>("");
+  const [inventory, setInventory] = useState<InventoryItem[]>([]);
+  const [filteredIngredientList, setFilteredIngredientList] = useState<IngredientItem[]>([]);
 
   useEffect(() => {
     if (!inventory.length) {
@@ -44,7 +47,7 @@ function IngredientSearch() {
     }
   }
 
-  function handleChange(event) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchText(event.target.value.toLowerCase());
   }
 
@@ -80,7 +83,6 @@ function IngredientSearch() {
                   key={ingredient.strIngredient1}
                   ingredient={ingredient}
                   inventory={inventory}
-                  setInventory={setInventory}
                   getInventory={getInventory}
                 ></Ingredient>
               );

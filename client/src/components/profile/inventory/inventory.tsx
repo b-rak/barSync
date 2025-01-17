@@ -1,6 +1,11 @@
+import { InventoryItem } from "../../../interfaces/Inventory";
 import Ingredient from "./ingredient";
+interface InventoryProps {
+  inventory: InventoryItem[];
+  getInventory: () => Promise<void>;
+}
 
-function Inventory({ inventory, setInventory, getInventory }) {
+function Inventory({ inventory, getInventory }: InventoryProps) {
   return (
     <>
       <h2 className="subtitle">Inventory:</h2>
@@ -11,7 +16,6 @@ function Inventory({ inventory, setInventory, getInventory }) {
               key={ingredient.strIngredient1}
               ingredient={ingredient}
               inventory={inventory}
-              setInventory={setInventory}
               getInventory={getInventory}
             ></Ingredient>
           );

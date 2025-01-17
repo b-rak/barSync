@@ -1,14 +1,22 @@
-import Inventory from "./inventory/inventory";
+import React from "react";
 import { Link } from "react-router";
+import { FavoriteItem } from "../../interfaces/Favorite";
+import { InventoryItem } from "../../interfaces/Inventory";
+import Inventory from "./inventory/inventory";
 
-function Profile({
+interface ProfileProps {
+  inventory: InventoryItem[];
+  setInventory: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
+  getInventory: () => Promise<void>;
+  favorites: FavoriteItem[];
+}
+
+function Profile ({
   inventory,
   setInventory,
   getInventory,
   favorites,
-  getFavorites,
-  setFavorites,
-}) {
+}: ProfileProps) {
   return (
     <>
       <div className="profile-container">
@@ -28,7 +36,6 @@ function Profile({
           <div className="inventory-container">
             <Inventory
               inventory={inventory}
-              setInventory={setInventory}
               getInventory={getInventory}
             ></Inventory>
           </div>

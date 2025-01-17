@@ -9,6 +9,7 @@ const api_key = process.env.API_KEY || "ANOTHER_KEY";
 const getIngredientList = async (req: Request, res: Response) => {
   const ingredientListUrl = url + api_key + "/list.php?i=list";
   console.log("URLRU", ingredientListUrl)
+
   try {
     const response = await fetch(ingredientListUrl);
     const fetchResponse = await response.json();

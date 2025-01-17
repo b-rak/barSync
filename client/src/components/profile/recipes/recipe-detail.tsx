@@ -1,17 +1,28 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { FavoriteItem } from "../../../interfaces/Favorite";
+import { IngredientItem } from "../../../interfaces/Ingredient";
+import { InventoryItem } from "../../../interfaces/Inventory";
 import Navbar from "../../nav-bar/nav-bar";
 import Ingredient from "../inventory/ingredient";
 
-function RecipeDetail() {
-  const [drinkDetail, setDrinkDetail] = useState(null);
-  const [drinkIngredients, setDrinkIngredients] = useState([]);
-  const [inventory, setInventory] = useState([]);
-  const [favorited, setFavorited] = useState(false);
-  const [favorites, setFavorites] = useState([]);
-  const [favoriteIds, setFavoriteIds] = useState([]);
+interface DrinkDetail {
+  idDrink: string;
+  strDrink: string;
+  strDrinkThumb: string;
+  strInstructions: string;
+  [key: string]: string | null; // to cover dynamic ingredient keys
+}
 
-  let params = useParams();
+function RecipeDetail() {
+  const [drinkDetail, setDrinkDetail] = useState<DrinkDetail | null>(null);
+  const [drinkIngredients, setDrinkIngredients] = useState<IngredientItem[]>([]);
+  const [inventory, setInventory] = useState<InventoryItem[]>([]); 
+  const [favorited, setFavorited] = useState<boolean>(false);
+  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
+
+  let params = useParams<{ recipeId: string }>();
   const drinkId = params.recipeId;
 
   useEffect(() => {
@@ -19,7 +30,7 @@ function RecipeDetail() {
       getInventory();
     }
     getFavorites();
-    getDrinkDetails(drinkId);
+    if (drinkId) getDrinkDetails(drinkId);
     if (favorites.length) {
       const arrOfIds = favorites.map((el) => el.idDrink);
       setFavoriteIds(arrOfIds);
@@ -31,7 +42,7 @@ function RecipeDetail() {
     }
   }, [favorited]);
 
-  async function getDrinkDetails(drinkId) {
+  async function getDrinkDetails(drinkId: string) {
     const url = "http://localhost:3000/recipedetail/" + drinkId;
     try {
       const response = await fetch(url);
@@ -79,8 +90,8 @@ function RecipeDetail() {
   }
 
   async function addFavorite() {
-    const title = drinkDetail.strDrink;
-    const thumb = drinkDetail.strDrinkThumb;
+    const title = drinkDetail?.strDrink || "";
+    const thumb = drinkDetail?.strDrinkThumb || "";
     try {
       await fetch("http://localhost:3000/favorites", {
         method: "POST",
@@ -136,7 +147,6 @@ function RecipeDetail() {
                       key={ingredient.strIngredient1}
                       ingredient={ingredient}
                       inventory={inventory}
-                      setInventory={setInventory}
                       getInventory={getInventory}
                     />
                   );

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../nav-bar/nav-bar";
 import { Link } from "react-router";
+import { FavoriteItem } from "../../../interfaces/Favorite";
+import { InventoryItem } from "../../../interfaces/Inventory";
+import Navbar from "../../nav-bar/nav-bar";
 
 function RecipeList() {
-  const [inventory, setInventory] = useState([]);
-  const [recipeFilters, setRecipeFilters] = useState([]);
-  const [recipeList, setRecipeList] = useState([]);
+  const [inventory, setInventory] = useState<InventoryItem[]>([]); 
+  const [recipeFilters, setRecipeFilters] = useState<string[]>([]);
+  const [recipeList, setRecipeList] = useState<FavoriteItem[]>([]);
 
   useEffect(() => {
     if (!inventory.length) {
@@ -48,15 +50,17 @@ function RecipeList() {
     }
   }
 
-  function addIngredient(event) {
-    const ingredient = event.target.value;
+  function addIngredient(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const ingredient = event.currentTarget.value;
+    if (!ingredient) return;
     const updatedFilter = recipeFilters.slice();
     updatedFilter.push(ingredient.split(" ").join("_"));
     setRecipeFilters(updatedFilter);
   }
 
-  function removeIngredient(event) {
-    const ingredient = event.target.value;
+  function removeIngredient(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const ingredient = event.currentTarget.value;
+    if (!ingredient) return;
     const idxOfIngredient = recipeFilters.indexOf(ingredient);
     const updatedFilter = recipeFilters.slice();
     updatedFilter.splice(idxOfIngredient, 1);
@@ -77,6 +81,7 @@ function RecipeList() {
                   key={ingredient.strIngredient1}
                 >
                   {ingredient.strIngredient1}
+                  
                   <button
                     className="ingredient-button"
                     value={ingredient.strIngredient1}
