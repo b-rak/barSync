@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import barSyncLogo from "../../assets/barSync_logo.png";
+import NavigationLink from "./NavigationLink";
 
 function Navbar() {
   return (
@@ -10,15 +11,9 @@ function Navbar() {
           <h1 className="title">barSync</h1>
         </div>
         <nav className="nav-buttons">
-          <Link to={"/"} className="nav-button">
-            <p>Home</p>
-          </Link>
-          <Link to={"/ingredientsearch"} className="nav-button">
-            <p>Add Ingredient</p>
-          </Link>
-          <Link to={"/recipes"} className="nav-button">
-            <p>Make something?</p>
-          </Link>
+          <NavigationLink route="/" text="Home" />
+          <NavigationLink route="/ingredientsearch" text="Add Ingredient" />
+          <NavigationLink route="/recipes" text="Make something?" />
         </nav>
       </div>
     </>
