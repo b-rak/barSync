@@ -47,7 +47,6 @@ function App() {
       <Navbar></Navbar>
       <Profile
         inventory={inventory}
-        setInventory={setInventory}
         getInventory={getInventory}
         favorites={favorites}
       ></Profile>

@@ -6,14 +6,12 @@ import Inventory from "./inventory/inventory";
 
 interface ProfileProps {
   inventory: InventoryItem[];
-  setInventory: React.Dispatch<React.SetStateAction<InventoryItem[]>>;
   getInventory: () => Promise<void>;
   favorites: FavoriteItem[];
 }
 
 function Profile ({
   inventory,
-  setInventory,
   getInventory,
   favorites,
 }: ProfileProps) {
