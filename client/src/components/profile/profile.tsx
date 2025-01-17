@@ -1,20 +1,31 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { FavoriteItem } from "../../interfaces/Favorite";
 import { InventoryItem } from "../../interfaces/Inventory";
+import { getFavorites } from "../../services/apiService";
 import Inventory from "./inventory/inventory";
 
 interface ProfileProps {
   inventory: InventoryItem[];
   getInventory: () => Promise<void>;
-  favorites: FavoriteItem[];
 }
 
 function Profile ({
   inventory,
-  getInventory,
-  favorites,
+  getInventory,//TODO remove from here
 }: ProfileProps) {
+  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
+
+  async function getFavorite(): Promise<void> {
+    const favorites = await getFavorites();
+    setFavorites(favorites);
+  }
+    
+  useEffect(() => {
+    getFavorite();
+
+  }, []);
+
   return (
     <>
       <div className="profile-container">

@@ -1,54 +1,32 @@
 import { useEffect, useState } from "react";
+import { getInventories } from "../src/services/apiService";
 import "./App.css";
 import Navbar from "./components/nav-bar/nav-bar";
 import Profile from "./components/profile/profile";
-import { FavoriteItem } from "./interfaces/Favorite";
+// import { FavoriteItem } from "./interfaces/Favorite";
 import { InventoryItem } from "./interfaces/Inventory";
  
 function App() {
 
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
-  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
 
-  async function getInventory(): Promise<void> {
-    const url = "http://localhost:3000/inventory";
-    try {
-      const response = await fetch(url);
-      const fetchInventory: InventoryItem[] = await response.json();
-      if (fetchInventory.length) {
-        setInventory(fetchInventory);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  async function getInventory() {
+    const inventories = await getInventories();
+    setInventory(inventories);
   }
 
-  async function getFavorites(): Promise<void> {
-    const url = "http://localhost:3000/favorites";
-    try {
-      const response = await fetch(url);
-      const fetchFavorites : FavoriteItem[]= await response.json();
-      if (fetchFavorites.length) {
-        setFavorites(fetchFavorites);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-
+  
   useEffect(() => {
     getInventory();
-    getFavorites();
   }, []);
+
 
   return (
     <>
       <Navbar></Navbar>
       <Profile
         inventory={inventory}
-        getInventory={getInventory}
-        favorites={favorites}
+        getInventory={getInventory}//TODO remove from here
       ></Profile>
     </>
   );
