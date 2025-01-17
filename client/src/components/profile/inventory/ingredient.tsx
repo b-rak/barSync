@@ -63,8 +63,8 @@ function Ingredient({ ingredient, inventory, getInventory }: IngredientProps )  
           onClick={added ? removeIngredient : addIngredient}
         >
           {added
-            ? String.fromCodePoint("0x1F5D1")
-            : String.fromCodePoint("0x1F378")}
+            ? String.fromCodePoint(parseInt("0x1F5D1", 16))
+            : String.fromCodePoint(parseInt("0x1F378", 16))}
         </button>
       </div>
     </>
