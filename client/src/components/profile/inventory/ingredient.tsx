@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IngredientItem } from "../../../interfaces/Ingredient";
 import { InventoryItem } from "../../../interfaces/Inventory";
+import { addIngredient, removeIngredient } from "../../../services/apiService";
 
 interface IngredientProps {
   ingredient: IngredientItem;
@@ -24,34 +25,13 @@ function Ingredient({ ingredient, inventory, getInventory }: IngredientProps )  
     }
   }, [inventory]);
 
-  async function addIngredient() {
-    try {
-      await fetch("http://localhost:3000/inventory", {
-        method: "POST",
-        body: JSON.stringify({ strIngredient1: ingredient.strIngredient1 }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      getInventory();
-    } catch (error) {
-      console.log(error);
+  async function handleClick () {
+    if (added) {
+      await removeIngredient(ingredient);
+    } else {
+      await addIngredient(ingredient);
     }
-  }
-
-  async function removeIngredient() {
-    try {
-      await fetch("http://localhost:3000/inventory", {
-        method: "DELETE",
-        body: JSON.stringify({ strIngredient1: ingredient.strIngredient1 }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      getInventory();
-    } catch (error) {
-      console.log(error);
-    }
+    getInventory();
   }
 
   return (
@@ -60,7 +40,7 @@ function Ingredient({ ingredient, inventory, getInventory }: IngredientProps )  
         <p>{ingredient.strIngredient1}</p>
         <button
           className="ingredient-button"
-          onClick={added ? removeIngredient : addIngredient}
+          onClick={handleClick}
         >
           {added
             ? String.fromCodePoint("0x1F5D1")
