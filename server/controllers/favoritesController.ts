@@ -4,9 +4,8 @@ import { db } from "../models/index";
 
 const getFavorites = async (req: Request, res: Response) => {
   try {
-    const favorites = await db.favoritesModel.findAll();
-    res.status(201);
-    res.send(favorites);
+    const data = await db.favoritesModel.findAll();
+    res.status(201).json(data);
   } catch (error) {
     console.log(error);
     res.status(500);
@@ -15,32 +14,34 @@ const getFavorites = async (req: Request, res: Response) => {
 
 const addFavorite = async (req: Request, res: Response) => {
   try {
-    const favoriteId = req.body.idDrink;
-    const favoriteThumb = req.body.strDrinkThumb;
-    const favoriteTitle = req.body.strDrink;
+    const {idDrink, strDrinkThumb, strDrink } = req.body;
+    
     await db.favoritesModel.create({
-      idDrink: favoriteId,
-      strDrinkThumb: favoriteThumb,
-      strDrink: favoriteTitle,
+      idDrink: idDrink,
+      strDrinkThumb: strDrinkThumb,
+      strDrink: strDrink,
     });
-    res.status(201);
-    res.send("added to favorites");
+    res.status(201).json({ message: 'Added to favorites'});
+
   } catch (error) {
-    console.log(error);
     res.status(500);
+    console.log(error);
   }
 };
 
 const removeFavorite = async (req: Request, res: Response) => {
   try {
-    const favorite = req.body.idDrink;
+    const {idDrink} = req.body;
+
+    if (!idDrink) {
+      return res.status(400).json({ error: "Missing required field: idDrink." });
+    }
+
     await db.favoritesModel.destroy({
-      where: {
-        idDrink: favorite,
-      },
+      where: { idDrink: idDrink },
     });
-    res.status(201);
-    res.send("removed from db");
+    
+    res.status(201).json({message: "Removed from favorites."});
   } catch (error) {
     console.log(error);
     res.status(500);

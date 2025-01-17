@@ -19,7 +19,7 @@ barSync is a web app that helps users manage their cocktail ingredients and disc
 
 barSync is built with a react front end styled with vanilla CSS. The back end runs off an express server linked in to a postgres SQL database using sequelize ORM.
 
-### Please note:
+### Please note
 
 You will need to create a `.env` file within the server folder.
 This file will need to contain the following details:
@@ -31,6 +31,8 @@ _DATABASE_NAME_ - the name of your psql database
 _DATABASE_USER_ - db username
 
 _DATABASE_PASS_ - db password
+
+_SECRET_KEY_ - key for Json Web Token
 
 This project uses [thecocktaildb](https://www.thecocktaildb.com/) API. It uses a premium API key the instructions of how to obtain one can be found on the link (costs £2 a month).
 
