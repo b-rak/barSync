@@ -36,7 +36,6 @@ function Profile ({
           <div className="inventory-container">
             <Inventory
               inventory={inventory}
-              setInventory={setInventory}
               getInventory={getInventory}
             ></Inventory>
           </div>
